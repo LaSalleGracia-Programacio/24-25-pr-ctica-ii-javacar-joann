@@ -1,14 +1,16 @@
 package org.JavaCar;
 
-abstract class Vehicle {
+
+// Classe Abstracta Vehicle
+public abstract class Vehicle implements Llogable {
     protected String matricula;
     protected String marca;
     protected String model;
     protected double preuBase;
-    protected String motor;
-    protected int rodes;
+    protected Motor motor;
+    protected Roda[] rodes;
 
-    public Vehicle(String matricula, String marca, String model, double preuBase, String motor, int rodes) {
+    public Vehicle(String matricula, String marca, String model, double preuBase, Motor motor, Roda[] rodes) {
         this.matricula = matricula;
         this.marca = marca;
         this.model = model;
@@ -17,55 +19,24 @@ abstract class Vehicle {
         this.rodes = rodes;
     }
 
-    public abstract double calcularPreu();
-
-    public String mostrarInfo() {
-        return "Vehicle: " + marca + " " + model + "\n" +
-                "Matrícula: " + matricula + "\n" +
-                "Preu Base: " + preuBase + "€\n" +
-                "Motor: " + motor + "\n" +
-                "Rodes: " + rodes;
-    }
-}
-
-class Cotxe extends Vehicle {
-    private int nombrePlaces;
-
-    public Cotxe(String matricula, String marca, String model, double preuBase, int nombrePlaces, String motor, int rodes) {
-        super(matricula, marca, model, preuBase, motor, rodes);
-        this.nombrePlaces = nombrePlaces;
-    }
+    public String getMatricula() { return matricula; }
+    public String getMarca() { return marca; }
+    public String getModel() { return model; }
+    public double getPreuBase() { return preuBase; }
+    public Motor getMotor() { return motor; }
+    public Roda[] getRodes() { return rodes; }
 
     @Override
-    public double calcularPreu() {
-        return preuBase;
-    }
-}
+    public String toString() {
+        String rodesInfo = (rodes != null && rodes.length > 0)
+                ? rodes[0].toString() + " (x" + rodes.length + ")"
+                : "Sense rodes";
 
-class Moto extends Vehicle {
-    private int cilindrada;
-
-    public Moto(String matricula, String marca, String model, double preuBase, int cilindrada, String motor, int rodes) {
-        super(matricula, marca, model, preuBase, motor, rodes);
-        this.cilindrada = cilindrada;
-    }
-
-    @Override
-    public double calcularPreu() {
-        return (cilindrada > 500) ? preuBase + 5 : preuBase;
-    }
-}
-
-class Furgoneta extends Vehicle {
-    private double capacitatCarga;
-
-    public Furgoneta(String matricula, String marca, String model, double preuBase, double capacitatCarga, String motor, int rodes) {
-        super(matricula, marca, model, preuBase, motor, rodes);
-        this.capacitatCarga = capacitatCarga;
-    }
-
-    @Override
-    public double calcularPreu() {
-        return preuBase;
+        return "Matricula: " + matricula +
+                ", Marca: " + marca +
+                ", Model: " + model +
+                ", Preu Base: " + preuBase +
+                ", Motor: " + (motor != null ? motor.toString() : "Sense motor") +
+                ", Rodes: " + rodesInfo;
     }
 }
